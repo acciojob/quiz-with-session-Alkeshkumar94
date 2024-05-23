@@ -1,7 +1,4 @@
-//your JS code here.
-
-// Do not change code below this line
-// This code will just display the questions to the screen
+// Quiz questions data
 const questions = [
   {
     question: "What is the capital of France?",
@@ -30,8 +27,17 @@ const questions = [
   },
 ];
 
+// DOM elements
+const questionsElement = document.getElementById("questions");
+const submitBtn = document.getElementById("submit-btn");
+const resultContainer = document.getElementById("result");
+
+// Retrieve saved progress from session storage or initialize an empty object
+let userAnswers = JSON.parse(sessionStorage.getItem('progress')) || {};
+
 // Display the quiz questions and choices
 function renderQuestions() {
+  questionsElement.innerHTML = ''; // Clear previous content
   for (let i = 0; i < questions.length; i++) {
     const question = questions[i];
     const questionElement = document.createElement("div");
@@ -49,8 +55,34 @@ function renderQuestions() {
       const choiceText = document.createTextNode(choice);
       questionElement.appendChild(choiceElement);
       questionElement.appendChild(choiceText);
+
+      // Add event listener to save choice in session storage
+      choiceElement.addEventListener('change', () => {
+        userAnswers[i] = choice;
+        sessionStorage.setItem('progress', JSON.stringify(userAnswers));
+      });
     }
     questionsElement.appendChild(questionElement);
   }
 }
+
+// Function to calculate and display the score
+function calculateScore() {
+  let score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (userAnswers[i] === questions[i].answer) {
+      score++;
+    }
+  }
+  return score;
+}
+
+// Event listener for the submit button
+submitBtn.addEventListener('click', () => {
+  const score = calculateScore();
+  resultContainer.textContent = `Your score is ${score} out of ${questions.length}`;
+  localStorage.setItem('score', score);
+});
+
+// Initial render of questions
 renderQuestions();
