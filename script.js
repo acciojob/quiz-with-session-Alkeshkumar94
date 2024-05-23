@@ -80,7 +80,7 @@ function calculateScore() {
 // Event listener for the submit button
 submitBtn.addEventListener('click', () => {
   const score = calculateScore();
-  resultContainer.textContent = `Your score is ${score} out of ${questions.length}`;
+  resultContainer.textContent = `Your score is ${score} out of ${questions.length}.`;
   localStorage.setItem('score', score);
 });
 
