@@ -29,8 +29,8 @@ const questions = [
 
 // DOM elements
 const questionsElement = document.getElementById("questions");
-const submitBtn = document.getElementById("submit-btn");
-const resultContainer = document.getElementById("result");
+const submitBtn = document.getElementById("submit");
+const resultContainer = document.getElementById("score");
 
 // Retrieve saved progress from session storage or initialize an empty object
 let userAnswers = JSON.parse(sessionStorage.getItem('progress')) || {};
